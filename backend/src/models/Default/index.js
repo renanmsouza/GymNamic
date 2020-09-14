@@ -131,9 +131,8 @@ class DefaultCRUD {
     set(data) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
-                sql: 'Update Graduacao set Descricao = ?, Nivel = ?, Cor = ?'+
-                ' Where idGraduacao = ?',
-                values: [graduacao.Descricao, graduacao.Nivel, graduacao.Cor, graduacao.idGraduacao]
+                sql: this.#sql.set,
+                values: data
             }, 
             (err, rows) => {
                 if (err) {
@@ -148,8 +147,8 @@ class DefaultCRUD {
     post(data) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
-                sql: 'Insert into Graduacao set ?',
-                values: [graduacao]
+                sql: this.#sql.post,
+                values: [data]
             }, 
             (err, rows) => {
                 if (err) {
@@ -164,8 +163,8 @@ class DefaultCRUD {
     del(data) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
-                sql: 'Delete from Graduacao Where idGraduacao = ?',
-                values: [graduacao.idGraduacao]
+                sql: this.#sql.del,
+                values: data
             }, 
             (err, rows) => {
                 if (err) {
