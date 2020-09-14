@@ -30,11 +30,11 @@ class Graduacao {
         })
     }
 
-    get(modalidade) {
+    get(graduacao) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
                 sql: 'Select * from Graduacao Where idGraduacao = ?',
-                values: [modalidade.idGraduacao]
+                values: [graduacao.idGraduacao]
             }, 
             (err, rows) => {
                 if (err) {
@@ -46,12 +46,12 @@ class Graduacao {
         })
     }
 
-    set(modalidade) {
+    set(graduacao) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
-                sql: 'Update Graduacao set Descricao = ?'+
+                sql: 'Update Graduacao set Descricao = ?, Nivel = ?, Cor = ?'+
                 ' Where idGraduacao = ?',
-                values: [modalidade.Descricao, modalidade.idGraduacao]
+                values: [graduacao.Descricao, graduacao.Nivel, graduacao.Cor, graduacao.idGraduacao]
             }, 
             (err, rows) => {
                 if (err) {
@@ -63,11 +63,11 @@ class Graduacao {
         })
     }
 
-    post(modalidade) {
+    post(graduacao) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
                 sql: 'Insert into Graduacao set ?',
-                values: [modalidade]
+                values: [graduacao]
             }, 
             (err, rows) => {
                 if (err) {
@@ -79,11 +79,11 @@ class Graduacao {
         })
     }
 
-    del(modalidade) {
+    del(graduacao) {
         return new Promise((resolve, reject) => {
             this.#conn.query({
                 sql: 'Delete from Graduacao Where idGraduacao = ?',
-                values: [modalidade.idGraduacao]
+                values: [graduacao.idGraduacao]
             }, 
             (err, rows) => {
                 if (err) {
