@@ -37,6 +37,25 @@ class Historicos {
         model.free();
     }
 
+    async set(req, res) {
+        const {  keys, fields } = req.body;
+        const data = [...Array(Object.values(fields)), ...Array(Object.values(keys))];
+
+        console.log(data);
+
+        const model = await this.createModel('Historicos');
+
+        await model.set(data)
+            .then((rows) => {
+                return res.status(201).json({ affectedRows: rows });
+            })
+            .catch((err) => {
+                return res.status(400).json( err );
+            });  
+        
+        model.free();
+    }
+
     async post(req, res) {
         var data = req.body;
 

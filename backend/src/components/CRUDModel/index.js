@@ -21,7 +21,7 @@ class CRUDModel {
         this.#conn.end();
     }
 
-    // Recupera todos os campos da Tabela
+    // Define os campos da Tabela
     setFileldList() {
         return new Promise((resolve, reject) => {
             this.#conn.query({
@@ -113,7 +113,7 @@ class CRUDModel {
                             query = query + ', '
                         }
                         
-                        query = query + this._keyList[i] + ' = ?';    
+                        query = query + this._fieldList[i] + ' = ?';    
                     }
                     // Where
                     query = query + ' Where ';
@@ -160,7 +160,7 @@ class CRUDModel {
     }
 
     del(data) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             var query = '';
             //del query
             await this.setFileldList()
