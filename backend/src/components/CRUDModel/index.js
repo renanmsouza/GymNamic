@@ -34,7 +34,7 @@ class CRUDModel {
                     this._keyList = [];
 
                     resolve(false);
-                }else {
+                } else {
                     for (let i = 0; i < rows.length; i++) {
                         let row = rows[i];
                         
@@ -48,8 +48,7 @@ class CRUDModel {
                     resolve(true);
                 }
             });
-        })
-        
+        })   
     }
 
     list() {
@@ -72,28 +71,25 @@ class CRUDModel {
     }
 
     get(data) {
-        this.setFileldList()
-        .then(() => {
-
-            
-
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            var query = '';
             // get query
-            console.log('Formar a Query');
-            let query = 'Select * from '+this._tableName+' Where '
-            for(let i = 0; i < this._keyList.length; i++) {
-                if (i > 1) {
-                    query = query + ' and '
-                }
-                
-                query = query + this._keyList[i] + ' = ?';
-                console.log(query)
-            }
-
+            await this.setFileldList()
+                .then(() => {
+                    query = 'Select * from '+this._tableName+' Where '
+                    for(let i = 0; i < this._keyList.length; i++) {
+                        if (i > 1) {
+                            query = query + ' and '
+                        }
+                        
+                        query = query + this._keyList[i] + ' = ?';
+                    }
+                });
+            
             this.#conn.query({
-                sql: query,
+                sql: query, 
                 values: data
-            }, 
+            },  
             (err, rows) => {
                 if (err) {
                     reject(err);
@@ -102,31 +98,33 @@ class CRUDModel {
                 }
             });
         })
-
-        })
     }
 
     set(data) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            var query = '';
             // set query
-            // Fields
-            let query = 'Update '+this._tableName+' set ';
-            for (let i = 0; i < this._fieldList.length; i++) {
-                if (i > 1) {
-                    query = query + ', '
-                }
-                
-                query = query + this._keyList[i] + ' = ?';    
-            }
-            // Where
-            query = query + ' Where ';
-            for (let i = 0; i < this._keyList.length; i++) {
-                if (i > 1) {
-                    query = query + ' and '
-                }
-                
-                query = query + this._keyList[i] + ' = ?';    
-            }
+            await this.setFileldList()
+                .then(() => {
+                    // Fields
+                    query = 'Update '+this._tableName+' set ';
+                    for (let i = 0; i < this._fieldList.length; i++) {
+                        if (i > 1) {
+                            query = query + ', '
+                        }
+                        
+                        query = query + this._keyList[i] + ' = ?';    
+                    }
+                    // Where
+                    query = query + ' Where ';
+                    for (let i = 0; i < this._keyList.length; i++) {
+                        if (i > 1) {
+                            query = query + ' and '
+                        }
+                        
+                        query = query + this._keyList[i] + ' = ?';    
+                    }
+                });
             
             this.#conn.query({
                 sql: query,
@@ -163,15 +161,19 @@ class CRUDModel {
 
     del(data) {
         return new Promise((resolve, reject) => {
+            var query = '';
             //del query
-            let query = 'Delete from ' + this._tableName+ ' Where ';
-            for (let i = 0; i < this._keyList.length; i++) {
-                if (i > 1) {
-                    query = query + ' and '
-                }
-                
-                query = query + this._keyList[i] + ' = ?';    
-            }
+            await this.setFileldList()
+                .then(() => {
+                    query = 'Delete from ' + this._tableName+ ' Where ';
+                    for (let i = 0; i < this._keyList.length; i++) {
+                        if (i > 1) {
+                            query = query + ' and '
+                        }
+                        
+                        query = query + this._keyList[i] + ' = ?';    
+                    }
+                });
             
             this.#conn.query({
                 sql: query,

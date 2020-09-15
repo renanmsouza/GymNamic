@@ -22,14 +22,13 @@ class Historicos {
     }
 
     async get(req, res) {
-        var data = [];
-        data.id = req.params.id;
+        var data = [req.params.id];
 
         const model = await this.createModel('Historicos');
 
-        model.get(data)
+        await model.get(data)
             .then((rows) => {
-                return res.status(201).json({ affectedRows: rows });
+                return res.status(201).json( rows );
             })
             .catch((err) => {
                 return res.status(400).json( err );
