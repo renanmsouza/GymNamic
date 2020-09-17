@@ -7,7 +7,7 @@ module.exports = function(app) {
         Modalidades.list(req, res);
     });
 
-    app.get('/cadastros/modalidades/:id', function(req, res) {
+    app.get('/cadastros/modalidades/get', function(req, res) {
         Modalidades.get(req, res);
     });
 
@@ -19,7 +19,7 @@ module.exports = function(app) {
         Modalidades.post(req, res);
     });
 
-    app.delete('/cadastros/modalidades/:id', function(req, res) {
+    app.delete('/cadastros/modalidades/del', function(req, res) {
         Modalidades.del(req, res);
     });
 }

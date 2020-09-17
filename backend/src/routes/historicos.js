@@ -7,7 +7,8 @@ module.exports = function(app) {
         Historicos.list(req, res);
     });
 
-    app.get('/cadastros/historicos/:id', function(req, res) {
+    // Informar chaves via Query
+    app.get('/cadastros/historicos/get', function(req, res) {
         Historicos.get(req, res);
     });
 
@@ -19,7 +20,8 @@ module.exports = function(app) {
         Historicos.post(req, res);
     });
 
-    app.delete('/cadastros/historicos/:id', function(req, res) {
+    // Informar chaves via Query
+    app.delete('/cadastros/historicos/del', function(req, res) {
         Historicos.del(req, res);
     });
 }

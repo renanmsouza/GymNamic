@@ -4,8 +4,8 @@ class CRUDController {
     // _Protected
         _tableName;
 
-    constructor(tableName, className) {
-        this.#Model = require('../../models/'+className);
+    constructor(tableName, modelName) {
+        this.#Model = require('../../models/'+modelName);
         this._tableName = tableName;
     }
 
@@ -30,7 +30,8 @@ class CRUDController {
     }
 
     async get(req, res) {
-        var data = [req.params.id];
+        const keys = req.query;
+        const data = [Object.values(keys)];
 
         const model = await this.createModel();
 
@@ -47,7 +48,7 @@ class CRUDController {
 
     async set(req, res) {
         const {  keys, fields } = req.body;
-        const data = [...Array(Object.values(fields)), ...Array(Object.values(keys))];
+        const data = Object.values(fields).concat(Object.values(keys));
 
         const model = await this.createModel();
 
@@ -79,7 +80,8 @@ class CRUDController {
     }
 
     async del(req, res) {
-        var data = [req.params.id];
+        const keys = req.query;
+        const data = [Object.values(keys)];
 
         const model = await this.createModel();
 

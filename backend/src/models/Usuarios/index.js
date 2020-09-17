@@ -1,22 +1,13 @@
-const Database = require('../../Database');
+const CRUDModel = require('../../components/CRUDModel');
 
-class Usuarios {
-    // #Private 
-        #conn;
-    // _Protected
-    // Public
-
-    constructor() {
-        this.#conn = Database.connection();
+class Usuarios extends CRUDModel {
+    constructor(tableName) {
+        super(tableName);
     }
 
-    free() {
-        this.#conn.end();
-    }
-
-    logar (login, senha) {
+    logar(login, senha) {
         return new Promise((resolve, reject) => {
-            this.#conn.query({
+            this._conn.query({
                 sql: 'Select * from Usuarios Where Login = ? and Senha = ?',
                 values: [login, senha]
             }, 
@@ -24,6 +15,7 @@ class Usuarios {
                 if (err) {
                     reject(err);
                 }else {
+                    console.log(rows);
                     resolve(rows);
                 }
             });

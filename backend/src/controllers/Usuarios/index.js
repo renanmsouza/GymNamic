@@ -1,16 +1,16 @@
-const ModelUsuarios = require('../../models/Usuarios');
+const CRUDController = require('../../components/CRUDController');
 
-class Usuarios {
-    // #Private 
-    // _Protected
-    // Public
+class Usuarios extends CRUDController {
+    constructor() {
+        super('Usuarios', 'Usuarios');
+    }
 
-    logar (req, res) {
+    async logar(req, res) {
         const { login, senha } = req.body;
 
-        const modelUsuarios = new ModelUsuarios();
+        const model = await this.createModel();
 
-        modelUsuarios.logar(login, senha)
+        model.logar(login, senha)
             .then((rows) => {
                 if (rows.length === 0) {
                     return res.status(401).json( rows );
@@ -22,7 +22,7 @@ class Usuarios {
                 return res.status(400).json( err );
             }); 
             
-        modelUsuarios.free();
+        model.free();
     }
 }
 

@@ -7,7 +7,7 @@ module.exports = function(app) {
         Alunos.list(req, res);
     });
 
-    app.get('/cadastros/alunos/:id', function(req, res) {
+    app.get('/cadastros/alunos/get', function(req, res) {
         Alunos.get(req, res);
     });
 
@@ -19,7 +19,7 @@ module.exports = function(app) {
         Alunos.post(req, res);
     });
 
-    app.delete('/cadastros/alunos/:id', function(req, res) {
+    app.delete('/cadastros/alunos/del', function(req, res) {
         Alunos.del(req, res);
     });
 }

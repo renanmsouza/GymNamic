@@ -1,9 +1,9 @@
 const Database = require('../../Database');
 
 class CRUDModel {
-    // #Private 
-        #conn;
+    // #Private   
     // _Protected
+        _conn;    
         _tableName;
         _keyList;
         _fieldList;
@@ -14,17 +14,17 @@ class CRUDModel {
         this._keyList = [];
         this._fieldList = [];
 
-        this.#conn = Database.connection();
+        this._conn = Database.connection();
     }
 
     free() {
-        this.#conn.end();
+        this._conn.end();
     }
 
     // Define os campos da Tabela
     setFileldList() {
         return new Promise((resolve, reject) => {
-            this.#conn.query({
+            this._conn.query({
                 sql: 'SHOW columns FROM '+this._tableName,
                 values: []
             }, 
@@ -56,7 +56,7 @@ class CRUDModel {
             // list query
             let query = 'Select * from '+this._tableName;
 
-            this.#conn.query({
+            this._conn.query({
                 sql: query,
                 values: []
             }, 
@@ -86,7 +86,7 @@ class CRUDModel {
                     }
                 });
             
-            this.#conn.query({
+            this._conn.query({
                 sql: query, 
                 values: data
             },  
@@ -109,24 +109,25 @@ class CRUDModel {
                     // Fields
                     query = 'Update '+this._tableName+' set ';
                     for (let i = 0; i < this._fieldList.length; i++) {
-                        if (i > 1) {
-                            query = query + ', '
-                        }
-                        
-                        query = query + this._fieldList[i] + ' = ?';    
+                        if (i < this._fieldList.length - 1) {
+                            query = query + this._fieldList[i] + ' = ?, '
+                        }else{
+                            query = query + this._fieldList[i] + ' = ?';    
+                        }                 
                     }
                     // Where
                     query = query + ' Where ';
                     for (let i = 0; i < this._keyList.length; i++) {
-                        if (i > 1) {
-                            query = query + ' and '
+                        if (i < this._keyList.length - 1) {
+                            query = query + this._keyList[i] + ' = ? and '
+                        }else{
+                            query = query + this._keyList[i] + ' = ?';    
                         }
                         
-                        query = query + this._keyList[i] + ' = ?';    
                     }
                 });
-            
-            this.#conn.query({
+            console.log(data);
+            this._conn.query({
                 sql: query,
                 values: data
             }, 
@@ -145,7 +146,7 @@ class CRUDModel {
             // post query
             let query = 'Insert into ' + this._tableName+ ' set ?'
 
-            this.#conn.query({
+            this._conn.query({
                 sql: query,
                 values: [data]
             }, 
@@ -175,7 +176,7 @@ class CRUDModel {
                     }
                 });
             
-            this.#conn.query({
+            this._conn.query({
                 sql: query,
                 values: data
             }, 
