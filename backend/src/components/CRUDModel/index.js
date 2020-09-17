@@ -126,7 +126,7 @@ class CRUDModel {
                         
                     }
                 });
-            console.log(data);
+     
             this._conn.query({
                 sql: query,
                 values: data

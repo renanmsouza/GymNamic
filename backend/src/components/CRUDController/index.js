@@ -31,7 +31,7 @@ class CRUDController {
 
     async get(req, res) {
         const keys = req.query;
-        const data = [Object.values(keys)];
+        const data = Object.values(keys);
 
         const model = await this.createModel();
 
@@ -81,7 +81,7 @@ class CRUDController {
 
     async del(req, res) {
         const keys = req.query;
-        const data = [Object.values(keys)];
+        const data = Object.values(keys);
 
         const model = await this.createModel();
 
